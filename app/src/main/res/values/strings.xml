@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">DTMS Demo</string>
+    <string name="log_in">Log In</string>
+    <string name="logout">Logout</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="kppvms">KPP-VMS</string>
+    <string name="version_1_0">VERSION 1.0</string>
+</resources>
