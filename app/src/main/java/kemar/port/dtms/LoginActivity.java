@@ -37,23 +37,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progress = new ProgressDialog(LoginActivity.this);
         progress.setMessage("Please Wait..");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            binding.edUsername.setShowSoftInputOnFocus(false);
-            binding.edPass.setShowSoftInputOnFocus(false);
-            binding.edTerminal.setShowSoftInputOnFocus(false);
-        } else {
-            try {
-                final Method method = EditText.class.getMethod(
-                        "setShowSoftInputOnFocus"
-                        , new Class[]{boolean.class});
-                method.setAccessible(true);
-                method.invoke(binding.edUsername, false);
-                method.invoke(binding.edPass, false);
-                method.invoke(binding.edTerminal, false);
-            } catch (Exception e) {
-                // ignore
+        String manufacturer = android.os.Build.MANUFACTURER;
+        if (manufacturer.equals("Honeywell")) {
+            binding.btnLogin.setVisibility(View.GONE);
+            binding.btnClear.setVisibility(View.GONE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                binding.edUsername.setShowSoftInputOnFocus(false);
+                binding.edPass.setShowSoftInputOnFocus(false);
+                binding.edTerminal.setShowSoftInputOnFocus(false);
+            } else {
+                try {
+                    final Method method = EditText.class.getMethod(
+                            "setShowSoftInputOnFocus"
+                            , new Class[]{boolean.class});
+                    method.setAccessible(true);
+                    method.invoke(binding.edUsername, false);
+                    method.invoke(binding.edPass, false);
+                    method.invoke(binding.edTerminal, false);
+                } catch (Exception e) {
+                    // ignore
+                }
             }
+        } else {
+            binding.btnLogin.setVisibility(View.VISIBLE);
+            binding.btnClear.setVisibility(View.VISIBLE);
         }
+
 
     }
 
@@ -67,13 +76,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnLogin:
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                if (!validateEditText(ids)) {
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                } else {
+                    Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.btnClear:
                 binding.edUsername.setText("");
                 binding.edPass.setText("");
                 binding.edTerminal.setText("");
+                binding.edUsername.requestFocus();
                 break;
         }
     }
@@ -153,7 +167,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (!validateEditText(ids)) {
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
             } else {
-                Toast.makeText(this, "Please fill all Fields!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show();
             }
             return true;
         }
@@ -161,10 +175,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             binding.edUsername.setText("");
             binding.edPass.setText("");
             binding.edTerminal.setText("");
+            binding.edUsername.requestFocus();
             return true;
         }
         if (keyCode == KeyEvent.KEYCODE_F4) {
             finish();
+            return true;
+        }
+
+        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            //hideKeyboard(this);
+            if (!validateEditText(ids)) {
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            } else {
+                Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
         return super.onKeyUp(keyCode, event);
@@ -184,7 +209,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             TextInputEditText et = (TextInputEditText) findViewById(id);
 
             if (TextUtils.isEmpty(et.getText().toString())) {
-                et.setError("Must enter Value");
+                et.setError("Please enter value");
                 isEmpty = true;
             }
         }

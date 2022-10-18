@@ -6,4 +6,11 @@
     <string name="username">Username</string>
     <string name="kppvms">KPP-VMS</string>
     <string name="version_1_0">VERSION 1.0</string>
+
+    <string-array name="cloth">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+    </string-array>
+
 </resources>

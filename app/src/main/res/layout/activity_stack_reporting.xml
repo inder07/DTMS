@@ -1,12 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="listener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".StackReportingActivity">
+
+        <!-- <EditText
+             android:id="@+id/ed1"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@drawable/ed_bg"
+             android:hint="Shift"
+             android:padding="10dp"
+             android:layout_margin="5dp"
+             android:imeOptions="actionNext"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent" />
+
+         <EditText
+             android:id="@+id/ed2"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@drawable/ed_bg"
+             android:hint="Shift Incharge"
+             android:padding="10dp"
+             android:layout_margin="5dp"
+             android:imeOptions="actionNext"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/ed1" />
+
+         <EditText
+             android:id="@+id/ed3"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@drawable/ed_bg"
+             android:hint="Equipment Id"
+             android:layout_margin="5dp"
+             android:padding="10dp"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/ed2" />
+
+         <EditText
+             android:id="@+id/ed4"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@drawable/ed_bg"
+             android:hint="Container Number"
+             android:layout_margin="5dp"
+             android:padding="10dp"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/ed3" />
+
+         <EditText
+             android:id="@+id/ed5"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@drawable/ed_bg"
+             android:layout_margin="5dp"
+             android:hint="Stack Location"
+             android:padding="10dp"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/ed4" />-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tl1"
@@ -14,8 +84,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="40dp"
             android:layout_marginRight="20dp"
             android:textColorHint="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,9 +98,11 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
                 android:hint="Shift"
+                android:inputType="textCapCharacters"
                 android:imeOptions="actionNext"
-                android:inputType="text"
                 android:textColor="@color/black" />
+
+            <requestFocus/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -41,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
             android:textColorHint="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,8 +126,9 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
                 android:hint="Shift Incharge"
-                android:imeOptions="actionDone"
+                android:imeOptions="actionNext"
                 android:inputType="text"
+                android:maxLength="15"
                 android:textColor="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -67,7 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
             android:textColorHint="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
@@ -79,9 +152,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                android:hint="Eq Id"
-                android:imeOptions="actionDone"
+                android:hint="Equipment Id"
+                android:imeOptions="actionNext"
                 android:inputType="text"
+                android:maxLength="10"
                 android:textColor="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -93,7 +167,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
             android:textColorHint="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
@@ -105,9 +179,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                android:hint="Cntr No"
-                android:imeOptions="actionDone"
+                android:hint="Container No"
+                android:imeOptions="actionNext"
                 android:inputType="text"
+                android:maxLength="10"
                 android:textColor="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -119,7 +194,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="20dp"
             android:textColorHint="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
@@ -131,63 +206,150 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorPrimary"
-                android:hint="Stock Location"
+                android:hint="Stack Location"
                 android:imeOptions="actionDone"
                 android:inputType="text"
+                android:maxLength="10"
                 android:textColor="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn1"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/round_corners_5dp"
-            android:text="New"
-            android:textColor="@color/white"
-            android:textSize="15sp"
+        <TextView
+            android:id="@+id/tvAlert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
             android:textStyle="bold"
-            app:cornerRadius="25dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tl5" />
+            app:layout_constraintTop_toBottomOf="@+id/tl5"
+            app:layout_constraintBottom_toTopOf="@+id/btnNext"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn2"
+            android:id="@+id/btnNext"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/round_corners_5dp"
+            android:onClick="@{listener::onClick}"
             android:text="Next"
             android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold"
+            android:visibility="visible"
             app:cornerRadius="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn1" />
+            app:layout_constraintTop_toBottomOf="@+id/tvAlert" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn3"
+            android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/round_corners_5dp"
+            android:onClick="@{listener::onClick}"
             android:text="Save"
             android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold"
+            android:visibility="visible"
             app:cornerRadius="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn2" />
+            app:layout_constraintTop_toBottomOf="@+id/btnNext" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnClear"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/round_corners_5dp"
+            android:onClick="@{listener::onClick}"
+            android:text="Clear"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:cornerRadius="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSave" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="F1.Next"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv2"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="F2.Save"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv3"
+                app:layout_constraintStart_toEndOf="@+id/tv1" />
+
+            <TextView
+                android:id="@+id/tv3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:singleLine="true"
+                android:text="F3.Clear"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv4"
+                app:layout_constraintStart_toEndOf="@+id/tv2" />
+
+            <TextView
+                android:id="@+id/tv4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="F4.Return"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
