@@ -112,6 +112,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/colorPrimary"
+                                android:padding="15dp"
                                 android:hint="@string/username"
                                 android:imeOptions="actionNext"
                                 android:inputType="text"
@@ -141,6 +142,7 @@
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/colorPrimary"
                                 android:hint="@string/password"
+                                android:padding="15dp"
                                 android:imeOptions="actionNext"
                                 android:inputType="text"
                                 android:textColor="@color/black" />
@@ -167,6 +169,7 @@
                                 android:layout_height="wrap_content"
                                 android:backgroundTint="@color/colorPrimary"
                                 android:hint="Terminal"
+                                android:padding="15dp"
                                 android:imeOptions="actionDone"
                                 android:inputType="text"
                                 android:textColor="@color/black" />

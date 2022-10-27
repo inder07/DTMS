@@ -28,9 +28,9 @@ public class StackReportingActivity extends AppCompatActivity implements View.On
         getSupportActionBar().setTitle("Stack Reporting");
         //initSpinner();
         binding.ed1.setFilters(new InputFilter[]{new InputFilter.AllCaps(), new InputFilter.LengthFilter(1)});
-        binding.ed2.setFilters(new InputFilter[]{new InputFilter.AllCaps(), new InputFilter.LengthFilter(15)});
-        binding.ed3.setFilters(new InputFilter[]{new InputFilter.AllCaps(), new InputFilter.LengthFilter(10)});
-        binding.ed4.setFilters(new InputFilter[]{new InputFilter.AllCaps(), new InputFilter.LengthFilter(10)});
+        binding.ed2.setFilters(new InputFilter[]{new InputFilter.AllCaps(), new InputFilter.LengthFilter(20)});
+        binding.ed3.setFilters(new InputFilter[]{new InputFilter.AllCaps(), new InputFilter.LengthFilter(20)});
+        binding.ed4.setFilters(new InputFilter[]{new InputFilter.AllCaps(), new InputFilter.LengthFilter(20)});
         binding.ed5.setFilters(new InputFilter[]{new InputFilter.AllCaps(), new InputFilter.LengthFilter(20)});
 
         String manufacturer = android.os.Build.MANUFACTURER;

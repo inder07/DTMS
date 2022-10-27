@@ -45,6 +45,7 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
             return true;
         }
         if (keyCode == KeyEvent.KEYCODE_F3) {
+            startActivity(new Intent(InventoryActivity.this, QueryActivity.class));
             return true;
         }
         if (keyCode == KeyEvent.KEYCODE_F4) {
@@ -64,7 +65,7 @@ public class InventoryActivity extends AppCompatActivity implements View.OnClick
 
                 break;
             case R.id.cardview3:
-
+                startActivity(new Intent(InventoryActivity.this, QueryActivity.class));
                 break;
             case R.id.cardview4:
                 finish();

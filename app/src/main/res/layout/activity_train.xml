@@ -25,7 +25,6 @@
             app:cardCornerRadius="10dp"
             app:cardElevation="2dp"
             app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toTopOf="@+id/cardview2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -98,7 +97,6 @@
             app:cardCornerRadius="10dp"
             app:cardElevation="2dp"
             app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toTopOf="@+id/cardview3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardview1">
@@ -171,7 +169,6 @@
             app:cardCornerRadius="10dp"
             app:cardElevation="2dp"
             app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toTopOf="@+id/cardview4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardview2">
@@ -245,7 +242,6 @@
             app:cardCornerRadius="10dp"
             app:cardElevation="2dp"
             app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toTopOf="@+id/cardview5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardview3">
@@ -318,7 +314,6 @@
             app:cardCornerRadius="10dp"
             app:cardElevation="2dp"
             app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toTopOf="@+id/cardview6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardview4">
@@ -391,7 +386,6 @@
             app:cardCornerRadius="10dp"
             app:cardElevation="2dp"
             app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardview5">

@@ -5,7 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -19,6 +21,11 @@ import androidx.databinding.DataBindingUtil;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.lang.reflect.Method;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import kemar.port.dtms.databinding.ActivityLoginBinding;
 
@@ -27,6 +34,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     ActivityLoginBinding binding;
     ProgressDialog progress;
+    Connection connection;
+    Statement statement;
+    ResultSet resultSet;
+
+    String url, user, pass;
+
+    private static final String DEFAULT_DRIVER = "oracle.jdbc.driver.OracleDriver";
+    private static final String DEFAULT_URL = "jdbc:oracle:thin:@10.10.40.13:1725:dtmstest";
+    private static final String DEFAULT_USERNAME = "concor";
+    private static final String DEFAULT_PASSWORD = "dtms9006";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +53,69 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         binding.setListener(this);
         progress = new ProgressDialog(LoginActivity.this);
         progress.setMessage("Please Wait..");
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+       /* url = "jdbc:oracle:thin:@10.10.40.13:1725:dtmstest";
+        user = "concor";
+        pass = "dtms9006";
+
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(
+                    url, user, pass);
+        } catch (SQLException e) {
+            binding.edUsername.setText("SQLException");
+            e.printStackTrace();
+        }
+        if (conn != null) {
+            System.out.println("Successfully connected to DB");
+            binding.edUsername.setText("Successfully connected to DB");
+        } else {
+            System.out.println("Failed to connect to DB");
+            binding.edUsername.setText("Failed to connect to DB");
+        }*/
+
+        /*try {
+            int count = getConn();
+            if (count > 0) {
+                Toast.makeText(this, "Connected Successfully!!", Toast.LENGTH_SHORT).show();
+                binding.edUsername.setText("Connected Successfully!!");
+            } else {
+                Toast.makeText(this, "Connection Failed!!", Toast.LENGTH_SHORT).show();
+                binding.edUsername.setText("Connection Failed!!");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            binding.edUsername.setText("Error");
+        }*/
+
+        /*try {
+            this.connection = createConnection();
+            Toast.makeText(LoginActivity.this, "Connected",
+                    Toast.LENGTH_SHORT).show();
+            Statement stmt=connection.createStatement();
+            StringBuffer stringBuffer = new StringBuffer();
+            ResultSet rs=stmt.executeQuery("select * from user_info");
+            while(rs.next()) {
+                stringBuffer.append( rs.getString(1)+"\n");
+            }
+            binding.edUsername.setText(stringBuffer.toString());
+            connection.close();
+        }
+        catch (Exception e) {
+
+            Toast.makeText(LoginActivity.this, ""+e,
+                    Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }*/
+
 
         String manufacturer = android.os.Build.MANUFACTURER;
         if (manufacturer.equals("Honeywell")) {
@@ -62,8 +142,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             binding.btnLogin.setVisibility(View.VISIBLE);
             binding.btnClear.setVisibility(View.VISIBLE);
         }
-
-
     }
 
     @Override
@@ -77,7 +155,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (view.getId()) {
             case R.id.btnLogin:
                 if (!validateEditText(ids)) {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    String user = binding.edUsername.getText().toString().trim();
+                    String pass = binding.edPass.getText().toString().trim();
+                    String terminal = binding.edTerminal.getText().toString().trim();
+                    try {
+                        ResultSet rs = login(user);
+                        if (rs == null)
+                            Toast.makeText(this, "Invalid Username", Toast.LENGTH_SHORT).show();
+                        else {
+                            if (!rs.getString("").equals(pass)) {
+                                Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show();
+                                binding.edPass.setError("Wrong Password");
+                            } else if (!rs.getString("").equals(terminal)) {
+                                Toast.makeText(this, "Wrong Terminal", Toast.LENGTH_SHORT).show();
+                                binding.edTerminal.setError("Wrong Terminal");
+                            } else {
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            }
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+
                 } else {
                     Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show();
                 }
@@ -90,6 +192,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 binding.edUsername.requestFocus();
                 break;
         }
+    }
+
+    private ResultSet login(String user) throws SQLException, ClassNotFoundException {
+        connection = ConnectionHelper.createConnection();
+        if (connection.isClosed() || connection == null) {
+            connection = ConnectionHelper.createConnection();
+        } else {
+            statement = connection.createStatement();
+        }
+        resultSet = statement.executeQuery("select * from User_info where user_id ='" + user + "'");
+        int count = 0;
+        while (resultSet.next()) {
+            Log.e("Result::", "getCntrDtls: " + resultSet.getString("LOC"));
+            count = count + 1;
+            return resultSet;
+        }
+        return resultSet;
     }
 
     /*private void login(String username, String password) {
@@ -165,7 +284,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //Toast.makeText(this, "keyCode ==> "+keyCode, Toast.LENGTH_SHORT).show();
         if (keyCode == KeyEvent.KEYCODE_F2) {
             if (!validateEditText(ids)) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                String user = binding.edUsername.getText().toString().trim();
+                String pass = binding.edPass.getText().toString().trim();
+                String terminal = binding.edTerminal.getText().toString().trim();
+                try {
+                    ResultSet rs = login(user);
+                    if (rs == null)
+                        Toast.makeText(this, "Invalid Username", Toast.LENGTH_SHORT).show();
+                    else {
+                        if (!rs.getString("").equals(pass)) {
+                            Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show();
+                            binding.edPass.setError("Wrong Password");
+                        } else if (!rs.getString("").equals(terminal)) {
+                            Toast.makeText(this, "Wrong Terminal", Toast.LENGTH_SHORT).show();
+                            binding.edTerminal.setError("Wrong Terminal");
+                        } else {
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+
             } else {
                 Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show();
             }
@@ -226,6 +369,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public int getConn() throws SQLException, ClassNotFoundException {
+        connection = ConnectionHelper.createConnection();
+        if (connection.isClosed() || connection == null) {
+            connection = ConnectionHelper.createConnection();
+        } else {
+            statement = connection.createStatement();
+        }
+        resultSet = statement.executeQuery("select * from User_info");
+        int count = 0;
+        while (resultSet.next()) {
+            count = count + 1;
+        }
+        return count;
+    }
+
+    public Connection createConnection(String driver, String url, String username, String password) throws ClassNotFoundException, SQLException {
+
+        Class.forName(driver);
+        return DriverManager.getConnection(url, username, password);
+    }
+
+    public Connection createConnection() throws ClassNotFoundException, SQLException {
+        return createConnection(DEFAULT_DRIVER, DEFAULT_URL, DEFAULT_USERNAME, DEFAULT_PASSWORD);
     }
 
 }
